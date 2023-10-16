@@ -1,0 +1,187 @@
+/*Creando la Base de Datos ENFERMERIA*/
+CREATE DATABASE bd_enfermeria_cecyteq
+/*Vamos a usar la BD para crear las tablas*/
+USE bd_enfermeria_cecyteq
+/*Creando las tablas y sus campos*/
+/***************TABLA PADECIMIENTO**************/
+CREATE TABLE PADECIMIENTO
+(
+	Cve_Padecimiento VARCHAR(5),
+	Descripcion_Pad VARCHAR(50),
+	CONSTRAINT pk_cp PRIMARY KEY (Cve_Padecimiento)
+)
+/*Insertando registros en la tabla PADECIMIENTO*/
+INSERT INTO PADECIMIENTO VALUES
+('PAD01', 'Dolor de Estomago'),
+('PAD02', 'Dolor de Cabeza'),
+('PAD03', 'Golpe'),
+('PAD04', 'Colicos'),
+('PAD05', 'Gripa')
+/***************TABLA MEDICAMENTO**************/
+CREATE TABLE MEDICAMENTO
+(
+	Cve_Medicamento VARCHAR(5),
+	Nombre_Medicamento VARCHAR(50),
+	Cantidad_Med INT(3),
+	CONSTRAINT pk_cm PRIMARY KEY (Cve_Medicamento)
+)
+/*Insertando registros en la tabla MEDICAMENTO*/
+INSERT INTO MEDICAMENTO VALUES
+('MED01', 'Paracetamol', 13),
+('MED02', 'Ibuprofeno', 25),
+('MED03', 'Butilhiosina', 32),
+('MED04', 'Omeprazol', 20),
+('MED05', 'Unguento	', 16)
+/***************TABLA TUTOR**************/
+CREATE TABLE TUTOR
+(
+	Cve_Tutor VARCHAR(5),
+	Nombre_Tutor VARCHAR(100),
+	Telefono_Tutor VARCHAR(10),
+	Direccion_Tutor VARCHAR (150),
+	CONSTRAINT pk_ct PRIMARY KEY (Cve_Tutor)
+)
+/*Insertando registros en la tabla TUTOR*/
+INSERT INTO TUTOR VALUES
+('TUT01', 'Benjamin Rodriguez', '1234', 'Carrizalito'),
+('TUT02', 'Samaz Glorioso', '2345', 'Epazotes Grandes'),
+('TUT03', 'Goku Black', '3456', 'Magueycitos'),
+('TUT04', 'Capitan Guiniu', '4567', 'Bucareli'),
+('TUT05', 'Krilin Lopez', '5678', 'Barranca del Platano')
+/***************TABLA ALUMNO**************/
+CREATE TABLE ALUMNO
+(
+	Matricula VARCHAR(5),
+	Nombre_A VARCHAR(20),
+	A_Paterno VARCHAR(20),
+	A_Materno VARCHAR(20),
+	Edad INT(3),
+	Sexo VARCHAR(1),
+	NSS VARCHAR(11),
+	Grupo VARCHAR(8),
+	Semestre VARCHAR(7),
+	Cve_Tutor1 VARCHAR(5),
+	CONSTRAINT pk_mat PRIMARY KEY(Matricula),
+	CONSTRAINT fk_ctut FOREIGN KEY (Cve_Tutor1) REFERENCES TUTOR(Cve_Tutor)
+)
+/*Insertando registros en la tabla ALUMNO*/
+INSERT INTO ALUMNO VALUES
+('ALU01', 'Josue', 'Chavero', 'Guerrero', 16, 'H', '12345678', '5TPROG', 'QUINTO', 'TUT03'),
+('ALU02', 'Gustavo', 'Aguilar', 'Garcia', 15, 'H', '23495748', '3TPGA', 'TERCERO', 'TUT02'),
+('ALU03', 'Diego', 'Maqueda', 'Hernandez', 14, 'H', '30498974', '1TPROG', 'PRIMERO', 'TUT04'),
+('ALU04', 'Jose Manuel', 'Garnica', 'Rodriguez', 13, 'H', '40957876', '3TPROG', 'TERCERO', 'TUT01'),
+('ALU05', 'Mariana', 'Hernandez', 'Cruz', 18, 'M', '59878733', '5TPGA', 'QUINTO', 'TUT03')
+/***************TABLA CONSULTA**************/
+CREATE TABLE CONSULTA
+(
+	Cve_Consulta VARCHAR(5),
+	Matricula1 VARCHAR(5),
+	Cve_Padecimiento2 VARCHAR(5),
+	Descipcion VARCHAR(100),
+	Fecha_Consulta DATE,
+	Hora_Entrada TIME,
+	Hora_Salida TIME,
+	Cve_Medicamento3 VARCHAR(5),
+	Cantidad_Suministrada INT(2),
+	CONSTRAINT pk_cconsul PRIMARY KEY (Cve_Consulta),
+	CONSTRAINT fk_matri FOREIGN KEY(Matricula1) REFERENCES ALUMNO(Matricula),
+	CONSTRAINT fk_cpade FOREIGN KEY(Cve_Padecimiento2) REFERENCES PADECIMIENTO(Cve_Padecimiento),
+	CONSTRAINT fk_cmedic FOREIGN KEY(Cve_Medicamento3) REFERENCES MEDICAMENTO(Cve_Medicamento)
+)
+/*Insertando registros en la tabla CONSULTA*/
+INSERT INTO CONSULTA VALUES
+('CON01', 'ALU01', 'PAD01', 'Presenta dolor de estomago fuerte', '2023/04/26', '14:20', '15:40', 'MED01', 2),
+('CON02', 'ALU03', 'PAD05', 'Sintomatología de gripa y tos', '2023/04/27', '09:25', '10:05', 'MED04', 1),
+('CON03', 'ALU05', 'PAD03', 'Refiere que se golpeó en la mano', '2023/04/28', '12:30', '13:50', 'MED03', 1),
+('CON04', 'ALU02', 'PAD02', 'Presetna síntomas de migraña', '2023/04/29', '08:10', '09:35', 'MED05', 2),
+('CON05', 'ALU03', 'PAD04', 'Cólicos estomacales por menstruación', '2023/04/30', '08:30', '09:55', 'MED02', 4)
+/*CONSULTAS DE VERIFICACIÓN DE DATOS*/
+/*------------------------------------------------------*/
+/*Queremos ver los registros de cada tabla*/
+SELECT * FROM padecimiento
+SELECT * FROM medicamento
+SELECT * FROM tutor
+SELECT * FROM alumno
+SELECT * FROM consulta
+/*Queremos saber quien es el tutor de Mariana*/
+SELECT Nombre_A, A_Paterno, A_Materno, Cve_Tutor, Nombre_Tutor
+FROM alumno
+INNER JOIN tutor
+ON alumno.Cve_Tutor1 = tutor.Cve_Tutor
+WHERE Nombre_A = "Mariana"
+/*////////////////////////////////////////////*/
+SELECT Nombre_Tutor FROM tutor
+INNER JOIN alumno
+ON tutor.Cve_Tutor = alumno.Cve_Tutor1
+WHERE  alumno.Nombre_A = "Mariana"
+/*Queremos saber que alumnos tiene el tutor 3*/
+SELECT Nombre_A, A_Paterno FROM alumno
+INNER JOIN tutor
+ON alumno.Cve_Tutor1 = tutor.Cve_Tutor
+WHERE Cve_Tutor = "TUT03"
+/*Queremos saber que alumno se atendio en la consulta 4*/
+SELECT Nombre_A FROM alumno
+INNER JOIN consulta
+ON alumno.Matricula = consulta.Matricula1
+WHERE Cve_Consulta = "CON04"
+/*Queremos saber que alumno y que padecimiento tiene
+el alumno que se atendio en la consulta 4*/
+SELECT Nombre_A, Descripcion_Pad
+FROM consulta
+INNER JOIN alumno ON
+consulta.Matricula1 = alumno.Matricula
+INNER JOIN padecimiento ON
+consulta.Cve_Padecimiento2 = padecimiento.Cve_Padecimiento
+WHERE Cve_Consulta = "CON04"
+/*Queremos saber que alumno, su padecmiento y el medicamento
+que se le dio en la consulta 2*/
+SELECT Nombre_A, Descripcion_Pad, Nombre_Medicamento
+FROM consulta
+INNER JOIN alumno ON
+consulta.Matricula1 = alumno.Matricula
+INNER JOIN padecimiento ON
+consulta.Cve_Padecimiento2 = padecimiento.Cve_Padecimiento
+INNER JOIN medicamento ON
+consulta.Cve_Medicamento3 = medicamento.Cve_Medicamento
+WHERE Cve_Consulta = "CON02"
+/*Queremos saber que alumno se atendió el 28 de Abirl
+En que consulta se registro, que padecimiento tenia,
+Que medicamento se le suministró
+A que hora entró a la consulta y que hora salió de ella*/
+SELECT Cve_Consulta, Nombre_A, Descripcion_Pad,
+		 Nombre_Medicamento,Fecha_Consulta, Hora_Entrada, Hora_Salida
+FROM consulta
+INNER JOIN alumno ON
+consulta.Matricula1 = alumno.Matricula
+INNER JOIN padecimiento ON
+consulta.Cve_Padecimiento2 = padecimiento.Cve_Padecimiento
+INNER JOIN medicamento ON
+consulta.Cve_Medicamento3 = medicamento.Cve_Medicamento
+WHERE Fecha_Consulta = "2023-04-28"
+
+/*Queremos saber que consultas ha tenido el alumno 3.
+Cuales son los padecimientos que tuvo.
+En que fechas tuvo consultas.
+A que hora entró y a que hora salió.
+Que medicamento se le dió y en que cantidades se le dió.
+Ademas, Quien es su tutor para poder avisarle al telefono.*/
+SELECT Cve_Consulta, Nombre_A, Descripcion_Pad, Fecha_Consulta,
+		 Hora_Entrada, Hora_Salida, Nombre_Medicamento,
+		 Cantidad_Suministrada, Nombre_Tutor, Telefono_Tutor
+FROM consulta INNER JOIN alumno
+ON consulta.Matricula1 = alumno.Matricula
+INNER JOIN padecimiento
+ON consulta.Cve_Padecimiento2 = padecimiento.Cve_Padecimiento
+INNER JOIN medicamento
+ON consulta.Cve_Medicamento3 = medicamento.Cve_Medicamento
+INNER JOIN tutor
+ON alumno.Cve_Tutor1 = tutor.Cve_Tutor
+WHERE Matricula = "ALU03"
+
+
+
+
+
+
+
+
