@@ -1,0 +1,140 @@
+<?php
+    require 'consulta.php';
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>PRACTICA AUTONOMA 4</title>
+</head>
+<body>
+    <div style="background-color: aquamarine;">
+        <center>
+            <h1> Selecciona la acción a realizar </h1>
+            <form action="">
+                <input type="submit" value="INSERTAR">
+                <input type="submit" value="CONSULTAR">
+            </form>
+        </center>
+    </div>
+    <div style="background-color: tomato;">
+        <center>
+            <h2> Aqui te mostramos los datos solicitados </h2>
+            <form action="" method="post">
+                <select name="mitabla" id="mitabla">
+                    <option value="registro_usuario"> REGISTRO DE USUARIO</option>
+                    <option value="lugar">LUGAR</option>
+                    <option value="paquete">PAQUETE</option>
+                </select>
+                <input type="submit" value="MOSTRAR">
+            </form>
+        </center>
+        <!-- Haciendo condiciones para generar las tablas -->
+        <?php
+            $generar_tabla = $_POST['mitabla'];
+            if($generar_tabla == 'registro_usuario')
+            {
+        ?>
+            <table border="1">
+            <thead>
+                <td>Clave_R</td>
+                <td>Nombre</td>
+                <td>Edad</td>
+                <td>Telefono</td>
+                <td>Direccion</td>
+                <td>Correo</td>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($ejecuta as $tabla_cosultada)
+                    {
+                ?>
+                <tr>
+                    <td> <?php echo $tabla_cosultada['Cve_R']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Nombre']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Edad']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Telefono']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Direccion']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['correo']; ?> </td>
+                </tr>
+                <?php
+                    }
+                ?>
+            </tbody>
+            </table>
+        <?PHP
+            }
+        ?>
+        <!-- Generando la tabla LUGAR -->
+        <?php
+            $generar_tabla = $_POST['mitabla'];
+            if($generar_tabla == 'lugar')
+            {
+        ?>
+            <table border="1">
+            <thead>
+                <td>Codigo_L</td>
+                <td>Nombre_L</td>
+                <td>Descripcion_L</td>
+                <td>Precio</td>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($ejecuta as $tabla_cosultada)
+                    {
+                ?>
+                <tr>
+                    <td> <?php echo $tabla_cosultada['Codigo_L']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Nombre_L']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Descripcion_L']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Precio']; ?> </td>
+                </tr>
+                <?php
+                    }
+                ?>
+            </tbody>
+            </table>
+        <?PHP
+            }
+        ?>
+        <!-- Generando la tabla PAQUETE -->
+        <?php
+            $generar_tabla = $_POST['mitabla'];
+            if($generar_tabla == 'paquete')
+            {
+        ?>
+            <table border="1">
+            <thead>
+                <td>Clave_P</td>
+                <td>Nombre_P</td>
+                <td>Precio</td>
+                <td>Codigo_L1</td>
+                <td>Cve_R2</td>
+                <td>Fecha</td>
+                <td>No_Personas</td>
+            </thead>
+            <tbody>
+                <?php
+                    foreach($ejecuta as $tabla_cosultada)
+                    {
+                ?>
+                <tr>
+                    <td> <?php echo $tabla_cosultada['Clave_P']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Nombre_P']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Precio']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Codigo_L1']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Cve_R2']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['Fecha']; ?> </td>
+                    <td> <?php echo $tabla_cosultada['No_Personas']; ?> </td>
+                </tr>
+                <?php
+                    }
+                ?>
+            </tbody>
+            </table>
+        <?PHP
+            }
+        ?>
+    </div>
+</body>
+</html>
