@@ -1,0 +1,53 @@
+CREATE DATABASE bd_registro_pa4
+USE bd_registro_pa4
+CREATE TABLE REGISTRO_USUARIO
+(
+	Cve_R VARCHAR(5),
+	Nombre VARCHAR(20),
+	Edad INT(3),
+	Telefono VARCHAR(10),
+	Direccion VARCHAR(50),
+	correo VARCHAR(50),
+	CONSTRAINT pk_cve PRIMARY KEY (Cve_R)
+)
+INSERT INTO registro_usuario VALUES
+('R0001','Cristiano Ronaldo',37,'12345','Arabia Saudi','elbicho@crack.com'),
+('R0002','Lionel Mesi',35,'23456','USA','liomesi@crack.com'),
+('R0003','Kilyam Mbape',30,'34567','Francia','elcorrelon@crack.com')
+CREATE TABLE LUGAR
+(
+	Codigo_L VARCHAR(5),
+	Nombre_L VARCHAR(20),
+	Descripcion_L VARCHAR (50),
+	Precio INT,
+	CONSTRAINT pk_cod PRIMARY KEY (Codigo_L)
+)
+INSERT INTO lugar VALUES
+('L0001','Cabañas El profe','Son las mas fregonas',2000),
+('L0002','Hostal El Centro','El emjor lugar para descansar',1500),
+('L0003','Casa de Campo La Roca','Cuenta con area de camping',1200)
+
+CREATE TABLE PAQUETE
+(
+	Clave_P VARCHAR(5),
+	Nombre_P VARCHAR(20),
+	Precio INT,
+	Codigo_L1 VARCHAR(5),
+	Cve_R2 VARCHAR(5),
+	Fecha DATE,
+	No_Personas INT(3),
+	CONSTRAINT pk_clave PRIMARY KEY(Clave_P),
+	CONSTRAINT fk_cod FOREIGN KEY (Codigo_L1) REFERENCES lugar(Codigo_L),
+	CONSTRAINT fk_cve FOREIGN KEY (Cve_R2) REFERENCES registro_usuario( Cve_R)
+)
+INSERT INTO paquete VALUES
+('PAQ01','Paquete Alcance',3000,'L0001','R0003','2023/12/24',5),
+('PAQ02','Paquete Enamores',4500,'L0002','R0001','2023/11/10',2),
+('PAQ03','Paquete Embaraces',6000,'L0003','R0002','2023/10/01',3)
+
+SELECT * FROM REGISTRO_USUARIO
+SELECT * FROM LUGAR
+SELECT * FROM PAQUETE
+
+
+
