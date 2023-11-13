@@ -1,0 +1,10 @@
+5.- PA5.- Bootstrap, tablas, base de datos y queris.
+
+* Realiza una Base de datos (bd_carrera_cecyteq) con las siguientes tablas:USUARIO, CARRERA, DISTANCIA, LUGAR, COMPETENCIA.
+Con los siguientes campos en cada tabla:USUARIO: Codigo_U, Nombre, Edad, Teléfono, Dirección.
+CARRRERA: Cve_Carr, Nombre_Carr.DISTANCIA: Cod_Dis, Descripcion_Dis.
+LUGAR: Cve_Lugar, Nombre_Lugar.COMPETENCIA: Cod_Comp, Nombre_Comp, Codigo_U, Cve_Carr, Cod_Dis, Cve_Lugar, Tiempo.
+* Descarga Bootstrap e instálalo en tu carpeta para usarlo de manera local.
+* Verifica la forma para usar Bootstrap para dar formato a las tablas y una mejor vista. Usa tu investigación para dar formato a tus tablas en HTML.
+* Conecta tu base de datos a tu proyecto de Visual Code y verifica tu conexión.*Realiza los Query's de: Consulta, Búsqueda, Insertar, Eliminar, Modificar o Actualizar, para cada una de las tablas de la base de datos.
+* Inserta por lo menos 3 registros desde el gestor Heidi SQL.*Inserta y modifica los registros desde HTML y PHP.
