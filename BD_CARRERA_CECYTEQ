@@ -1,0 +1,56 @@
+CREATE DATABASE bd_carrera_cecyteq
+USE bd_carrera_cecyteq
+/*USUARIO: Codigo_U, Nombre_U, Edad_U, Teléfono_U, Dirección_U*/
+CREATE TABLE USUARIO
+(
+	Codigo_U VARCHAR(5),
+	Nombre_U VARCHAR (20),
+	Edad_U INT(3),
+	Telefono_U VARCHAR(10),
+	Direccion_U VARCHAR(50),
+	CONSTRAINT pk_cu PRIMARY KEY (Codigo_U)
+)
+/*CARRRERA: Cve_Carr, Nombre_Carr.*/
+CREATE TABLE CARRERA
+(
+	Cve_Carr VARCHAR(5),
+	Nombre_Carr VARCHAR(50),
+	CONSTRAINT pk_cc PRIMARY KEY (Cve_Carr)
+)
+/*DISTANCIA: Cod_Dis, Descripcion_Dis.*/
+CREATE TABLE DISTANCIA
+(
+	Cod_Dis VARCHAR(5),
+	Descripcion_Dis VARCHAR(50),
+	CONSTRAINT pk_cd PRIMARY KEY (Cod_Dis)
+)
+/*LUGAR: Cve_Lugar, Nombre_Lugar.*/
+CREATE TABLE LUGAR
+(
+	Cve_Lugar VARCHAR(5),
+	Nombre_Lugar VARCHAR(50),
+	CONSTRAINT pk_cl PRIMARY KEY (Cve_Lugar)
+)
+/*
+COMPETENCIA:
+Cod_Comp, Nombre_Comp, Codigo_U, Cve_Carr, Cod_Dis,
+Cve_Lugar, Tiempo, Fecha.
+*/
+CREATE TABLE COMPETENCIA
+(
+	Cod_Comp VARCHAR(5),
+	Nombre_Comp VARCHAR(50),
+	Codigo_U1 VARCHAR(5),
+	Cve_Carr2 VARCHAR(5),
+	Cod_Dis3 VARCHAR(5),
+	Cve_Lugar4 VARCHAR(5),
+	Tiempo TIME,
+	Fecha DATE,
+	CONSTRAINT pk_codC PRIMARY KEY (Cod_Comp),
+	CONSTRAINT fk_cu FOREIGN KEY (Codigo_U1) REFERENCES usuario(Codigo_U),
+	CONSTRAINT fk_cc FOREIGN KEY (Cve_Carr2) REFERENCES carrera(Cve_Carr),
+	CONSTRAINT fk_cd FOREIGN KEY (Cod_Dis3) REFERENCES distancia(Cod_Dis),
+	CONSTRAINT fk_cl FOREIGN KEY (Cve_Lugar4) REFERENCES lugar(Cve_Lugar)
+)
+
+
